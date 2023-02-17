@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+ 
+<head>
+<style>
+   h2{
+    
+background-color
+: green
+   
+   }
+   td{
+   background-color
+:white
+   }
+    
+         table, th, td {
+            border: 2px solid black;
+         }
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cosmo/bootstrap.min.css" />
+<script src= "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script> 
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<div>
+<h2  >Spring Boot Crud System -Teacher Registation</h2>
+<tr>
+<div align = "left" >   
+     <h3><a  th:href="@{'/new2'}"><u>Add new</u></a></h3>    
+    </div>
+</tr>
+<center>
+<tr>
+<div class="col-sm-5" align = "center">
+                 <div class="panel-body" align = "center" >
+                <table id="MyTable" class="display" cellspacing="20" width="150%"  height="200%">  
+  <thead bgcolor="yellow">
+    <tr>
+       <th style="background-color:blue"> ID</th>
+            <th style="background-color:blue"> Name</th>
+            <th style="background-color:blue"> Add</th>
+            <th style="background-color:blue">Salary</th>
+            <th style="background-color:blue">Email</th>
+            <th style="background-color:blue">Edit</th>
+            <th style="background-color:blue">Delete</th>
+            
+   </tr></center>
+  </thead>
+  <tbody>
+      <tr style="height:50px"  th:each="Teacher : ${liststudent }">
+<td bgcolor="CC99CC" th:text="${Teacher.Eid}"> ID</td>
+<td bgcolor="FFCC00" th:text="${Teacher.Ename}">Name</td>
+<td bgcolor="33CC00" th:text="${Teacher.Eadd}">Address</td>
+<td bgcolor="#DCDCDC" th:text="${Teacher.Esal}">Salary</td>
+<td bgcolor="#DCDCDC" th:text="${Teacher.Email}">Salary</td>
+<td  bgcolor="CCCC00">
+<a th:href="@{'/edit1/' + ${Teacher.Eid}}">Edit</a>
+</td>     
+<td  bgcolor="66FFFF">
+<a th:href="@{'/delete1/' + ${Teacher.Eid}}">Delete</a>
+</td>     
+</tr>
+  
+  </tbody>
+</table>
+                    
+                 </div>
+ 
+            </div>
+ 
+</tr>
+<script type="text/javascript">
+    function clearSearch() {
+        window.location = "[[@{/index2}]]";
+    }
+</script>
+<script>$(document).ready(function() {  
+    $('#MyTable').DataTable( {  
+        initComplete: function () {  
+            this.api().columns().every( function () {  
+                var column = this;  
+                var select = $('<select><option value=""></option></select>')  
+                    .appendTo( $(column.footer()).empty() )  
+                    .on( 'change', function () {  
+                        var val = $.fn.dataTable.util.escapeRegex(  
+                            $(this).val()  
+                        );  
+                //to select and search from grid  
+                        column  
+                            .search( val ? '^'+val+'$' : '', true, false )  
+                            .draw();  
+                    } );  
+   
+                column.data().unique().sort().each( function ( d, j ) {  
+                    select.append( '<option value="'+d+'">'+d+'</option>' )  
+                } );  
+            } );  
+        }  
+    } );  
+} );  </script>
+</body>
+</html>
